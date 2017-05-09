@@ -1,0 +1,53 @@
+<html>
+<Header />
+<Body>
+<link href="Styles.css" rel="stylesheet" >
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
+
+
+
+
+<div id="drop-files" ondragover="return false">
+<div id="drop-text">Drop Invoices<br />
+Here
+</div>
+<img width="200" height="200" id="drop-img" />
+</div>
+
+<script type="text/javascript">
+var dropZone = document.getElementById('drop-files');
+
+
+function bob(e){
+    e.stopPropagation();
+    e.preventDefault();
+
+        var files = e.dataTransfer.files;
+        $.each(files, function(index, file) {
+		    
+            var fileReader = new FileReader();
+            fileReader.onload = (function(bob) {
+                var filename = file.name;
+				alert(filename);
+                var arrayBuffer = fileReader.result;
+                if (arrayBuffer.substr(0, 20) == "data:application/pdf") {                
+                    alert(".pdf");               
+                } else if (arrayBuffer.substr(0, 13) == "data:text/xml") {
+                    alert(".xml");
+                } else {
+                    alert("Invalid data type. PDF or XML expected.");
+                    return;
+                }
+            });
+
+            fileReader.readAsDataURL(file);
+        });
+    };
+dropZone.addEventListener('drop', bob, false); 
+</script>
+
+This is new1
+</body>
+</html>
